@@ -145,6 +145,10 @@ void sent( canHandle hnd)
                 }
                 stat = canWrite(hnd, counter, msg, nomber, 0);
                 counter++;
+                if (counter == 2047)
+                {
+
+                }
                 break; // Мы нашли и обработали токен "s", завершаем поиск
                        
             }
@@ -178,8 +182,8 @@ void read(canHandle hnd)
     Check("canSetBusParams", statr);
     statr = canBusOn(hnd1);
     Check("canBusOn", statr);
-
-    while(1>0)
+    int id=0;
+    while(id!=2047)
     {
         unsigned char* mess = new unsigned char[nomber];
         statr = canReadWait(hnd1, &idr, mess, &dlcr, &flagsr, &timestampr, 1);
@@ -193,6 +197,7 @@ void read(canHandle hnd)
                 printf("Id: %ld, Msg: %u %u %u %u %u %u %u %u %u Flags: %lu\n",
                     idr, dlcr, mess[0], mess[1], mess[2], mess[3], mess[4],
                     mess[5], mess[6], mess[7], mess[8], timestampr);
+                id = idr;
                 
             }
         }
@@ -201,5 +206,11 @@ void read(canHandle hnd)
             break;
         }
         
+        
     }
+    statr = canBusOff(hnd);
+    Check("canBusOff", statr);
+    //закрываем канал
+    statr = canClose(hnd);
+    Check("canClose", statr);
 }
