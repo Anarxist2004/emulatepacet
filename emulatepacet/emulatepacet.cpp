@@ -144,6 +144,7 @@ void sent( canHandle hnd)
                     }
                 }
                 stat = canWrite(hnd, counter, msg, nomber, 0);
+                Sleep(100);
                 counter++;
                 if (counter == 2047)
                 {
@@ -186,7 +187,7 @@ void read(canHandle hnd)
     while(id!=2047)
     {
         unsigned char* mess = new unsigned char[nomber];
-        statr = canReadWait(hnd1, &idr, mess, &dlcr, &flagsr, &timestampr, 1);
+        statr = canReadWait(hnd1, &idr, mess, &dlcr, &flagsr, &timestampr, 120);
         if (statr == canOK) {
             if (flagsr & canMSG_ERROR_FRAME) {
                 printf("***ERROR FRAME RECEIVED***");
