@@ -144,8 +144,10 @@ void sent( canHandle hnd)
                     }
                 }
                 stat = canWrite(hnd, counter, msg, nomber, 0);
-                Sleep(100);
+                Sleep(0.25);
                 counter++;
+
+
                 if (counter == 2047)
                 {
 
